@@ -29,23 +29,30 @@ if not os.path.exists(args.dir):
     exit(2)
 
 query = urllib.parse.quote(args.query)
-url="http://www.bing.com/images/search?q={}&FORM=HDRSC2".format(query)
-print("Scraping URL:", url)
+url2="http://www.bing.com/images/search?q={}&qft=+filterui:imagesize-custom_400_600&FORM=HDRSC2".format(query)
+# I got this link by checking network requests made by Bing while you scroll down their page...
+url="https://www.bing.com/images/async?q={}&first={}&count=35&relp=35&qft=+filterui%3aimagesize-custom_400_600+filterui%3aphoto-photo&scenario=ImageBasicHover&datsrc=N_I&layout=RowBased&mmasync=1&dgState=x*0_y*0_h*0_c*6_i*71_r*13&IG=83897C3217364C41BBE00B0CE65C7782&SFX=3&iid=images.5947"
 
-header={'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36"}
-soup = get_soup(url,header)
+print("Scraping URL:", url.format(query, 1))
 
+
+total = 100
+first = 1
 ActualImages=[]# contains the link for Large original images, type of  image
-for a in soup.find_all("a",{"class":"iusc"}):
-    #print a
-    m = json.loads(a['m'])
-    turl = m["turl"]
-    murl = m["murl"]
+while len(ActualImages) < total:
+    header={'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36"}
+    soup = get_soup(url.format(query, first), header)
+    for a in soup.find_all("a",{"class":"iusc"}):
+        #print a
+        m = json.loads(a['m'])
+        turl = m["turl"]
+        murl = m["murl"]
 
-    image_name = urllib.parse.urlsplit(murl).path.split("/")[-1]
-    print("Found image:", image_name)
+        image_name = urllib.parse.urlsplit(murl).path.split("/")[-1]
+        print("Found image:", image_name)
 
-    ActualImages.append((image_name, turl, murl))
+        ActualImages.append((image_name, turl, murl))
+    first += 35
 
 print("Found total" , len(ActualImages),"images")
 
