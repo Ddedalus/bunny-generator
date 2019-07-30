@@ -1,3 +1,6 @@
+# the downloaded pics
+pics/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

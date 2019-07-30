@@ -43,17 +43,16 @@ for a in soup.find_all("a",{"class":"iusc"}):
     murl = m["murl"]
 
     image_name = urllib.parse.urlsplit(murl).path.split("/")[-1]
-    print(image_name)
+    print("Found image:", image_name)
 
     ActualImages.append((image_name, turl, murl))
 
 print("Found total" , len(ActualImages),"images")
-exit(1)
 
-outdir = os.path.join(args.dir, query.replace(' ', '_'))
+outdir = os.path.join(args.dir, args.query.replace(' ', '_').lower())
 os.makedirs(outdir, exist_ok=True)
 
-# name_stub = query.replace(' ', '_')
+# name_stub = args.query.replace(' ', '_')
 # save the images
 for i, (image_name, turl, murl) in enumerate(ActualImages):
     try:
@@ -65,3 +64,4 @@ for i, (image_name, turl, murl) in enumerate(ActualImages):
 
     with open(os.path.join(outdir, image_name), 'wb') as f:
         f.write(raw_img)
+exit(1)
