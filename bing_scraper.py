@@ -26,6 +26,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('query', type=str, help='What to search Bing for?')
 parser.add_argument('-d', '--dir', type=str,
                     default='~/Pictures', help='Where to store the pics?')
+parser.add_argument('-s', '--save', action='store_true', help='Store the images locally.')
 args = parser.parse_args()
 
 if not os.path.exists(args.dir):
@@ -44,7 +45,7 @@ print("Scraping URL:", url.format(query, 1))
 
 total = 100
 first = 1
-ActualImages = []  # contains the link for Large original images, type of  image
+ActualImages = {}  # contains the link for Large original images, type of  image
 while len(ActualImages) < total:
     header = {
         'User-Agent': "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36"}
@@ -57,18 +58,22 @@ while len(ActualImages) < total:
 
         image_name = urllib.parse.urlsplit(murl).path.split("/")[-1]
         print("Found image:", image_name)
-
-        ActualImages.append((image_name, turl, murl))
+        ActualImages[image_name] = turl
     first += 35
 
 print("Found total", len(ActualImages), "images")
-
 outdir = os.path.join(args.dir, args.query.replace(' ', '_').lower())
 os.makedirs(outdir, exist_ok=True)
 
+with open(os.path.join(outdir, 'links.json'), 'w') as o:
+    json.dump(ActualImages, o, indent=2)
+
+if not args.save:
+    exit(0)
+
 name_stub = args.query.replace(' ', '_') + "_{:04d}.{}"
 # save the images
-for i, (image_name, turl, murl) in enumerate(ActualImages):
+for i, (image_name, turl) in enumerate(ActualImages.items()):
     try:
         raw_img = urllib.request.urlopen(turl).read()
     except Exception as e:
