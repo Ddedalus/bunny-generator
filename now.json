@@ -6,5 +6,5 @@
       "PRIVATE_KEY": "@bunny-private-key"
   },
   "builds": [{ "src": "./now.js", "use": "@now/node" }],
-  "routes": [{"src": "/*", "dest": "/now.js"}]
+  "routes": [{"src": "/", "dest": "/now.js"}]
 }
