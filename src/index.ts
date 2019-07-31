@@ -4,10 +4,12 @@ import { get } from 'https'
 export = (app: Application) => {
   app.on(['issues.opened', 'issues.closed', 'issues.reopened'], async (context) => {
     
-    get('https://source.unsplash.com/random/?bunny', (res) => {
+    const query = 'bunny';
+    const url = `https://source.unsplash.com/random/?${query}`;
+    get(url, (res) => {
       console.log('Redirect:', res.headers.location);
       
-      const bunny_link: string = res.headers.location;
+      const bunny_link: string = res.headers.location || url;
       const body = `Good job! Enjoy:\n\
       ![Cute bunny](${bunny_link})`
       console.log("Publishing an issue:", body)
