@@ -1,5 +1,10 @@
 {
   "version": 2,
-  "builds": [{ "src": "now.js", "use": "@now/node" }],
-  "routes": [{ "src": "/", "dest": "/now.js" }]
+  "env": {
+      "APP_ID": "@bunny-app-id",
+      "WEBHOOK_SECRET": "@bunny-webhook-secret",
+      "PRIVATE_KEY": "@bunny-private-key"
+  },
+  "builds": [{ "src": "./now.js", "use": "@now/node" }],
+  "routes": [{"src": "/*", "dest": "/now.js"}]
 }
