@@ -6,3 +6,5 @@ A toy project to include cute pictures as a reward for completing Pull Requests 
 npm run build
 npm run dev
 ```
+
+
