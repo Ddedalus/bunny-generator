@@ -2,7 +2,7 @@ import { Application } from 'probot' // eslint-disable-line no-unused-vars
 import { get } from 'https'
 
 
-export = (app: Application) => {
+module.exports = (app: Application) => {
   console.log('The app has just started!');
   app.on(['issues.opened', 'issues.closed', 'issues.reopened'], async (context) => {
     
