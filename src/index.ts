@@ -1,12 +1,14 @@
 import { Application } from 'probot' // eslint-disable-line no-unused-vars
 import { get } from 'https'
 
+
 export = (app: Application) => {
+  console.log('The app has just started!');
   app.on(['issues.opened', 'issues.closed', 'issues.reopened'], async (context) => {
     
     const query = 'bunny';
     const url = `https://source.unsplash.com/random/?${query}`;
-    get(url, (res) => {
+    await get(url, (res) => {
       console.log('Redirect:', res.headers.location);
       
       const bunny_link: string = res.headers.location || url;
