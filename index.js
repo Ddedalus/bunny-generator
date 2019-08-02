@@ -19,11 +19,11 @@ module.exports = app => {
       context.log('Redirect target:', bunny_link);
 
       if (context.payload.pull_request.merged & context.payload.action == 'closed') {
-        const praise = 'Good job on closing that one! Enjoy your reward:';
+        var praise = 'Good job on closing that one! Enjoy your reward:';
       } else if (context.payload.action == 'opened') {
-        const praise = 'A new pull request, great! Look here...';
+        var praise = 'A new pull request, great! Look here...';
       } else {
-        const praise = `Well, dunno what\'s goinng on. Grab a ${query} anyway:`;
+        var praise = `Well, dunno what\'s goinng on. Grab a ${query} anyway:`;
       }
 
       const body = `${praise}\n![${query}](${bunny_link})`
@@ -34,7 +34,7 @@ module.exports = app => {
     });
     function wait() {
       return new Promise((resolve, reject) => {
-        setTimeout(() => resolve("hello"), 1000)
+        setTimeout(() => resolve("hello"), 2000)
       });
     }
     await wait();
