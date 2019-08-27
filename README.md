@@ -46,6 +46,11 @@ now deploy; now log <paste_domain_alias_here> -a -f
 ``` 
 Make sure you also paste the same domain as 'Webhook URL' on the GitHub app configuration page.
 
+To deploy for production (for example automatically add alias on NOW) use the following:
+```bash
+now --prod
+```
+
 ### Other remarks
 The code uses two nasty cheats currently:
   - to obtain a random picture from unsplash.com/random without messing around with their API, the header of their automatic redirect is used to fetch the actual redirect target. One should replace that with proper API call in the future.
