@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@chadfawcett/probot-serverless-now": "^1.0.0",
-    "acorn": "^6.0.0",
+    "acorn": "^6.4.1",
     "handlebars": "^4.7.3",
     "probot": "^7.2.0",
     "yourself": "^1.0.0"
